@@ -3362,9 +3362,13 @@ static void walt_init_once(void)
 
 void walt_sched_init_rq(struct rq *rq)
 {
-	int j;
+		int j;
+
+	if (cpu_of(rq) == 0)
+		walt_init_once();
 
 	cpumask_set_cpu(cpu_of(rq), &rq->freq_domain_cpumask);
+	
 	init_irq_work(&walt_migration_irq_work, walt_irq_work);
 	init_irq_work(&walt_cpufreq_irq_work, walt_irq_work);
 	walt_rotate_work_init();
@@ -3408,7 +3412,4 @@ void walt_sched_init_rq(struct rq *rq)
 	}
 	rq->cum_window_demand_scaled = 0;
 	rq->notif_pending = false;
-
-	walt_cpu_util_freq_divisor =
-	    (sched_ravg_window >> SCHED_CAPACITY_SHIFT) * 100;
 }

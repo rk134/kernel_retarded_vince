@@ -131,45 +131,34 @@ if [ "$AOSPCLANG_COMPILE" == "no" ]; then
 			      CROSS_COMPILE=aarch64-linux-gnu- \
 			      CROSS_COMPILE_ARM32=arm-linux-gnueabi- |& tee -a $HOME/build/build${BUILD}.txt
 else	
-	cd .. \
-	export PATH="$(pwd)/tools/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin:$PATH" \
-	export PATH="$(pwd)/tools/gcc/linux-x86/arm/arm-linux-androideabi-4.9/bin:$PATH" \
-	export PATH="$(pwd)/tools/clang/host/linux-x86/clang-r428724/bin:$PATH" \
-	export LD_LIBRARY_PATH="$(pwd)/tools/clang/host/linux-x86/clang-r428724/lib64:$LD_LIBRARY_PATH" \
-	export ARCH=arm64 \
-	export SUBARCH=ARM64 \
-	export CLANG_TRIPLE=aarch64-linux-gnu- \
-	export CROSS_COMPILE=aarch64-linux-android- \
-	export CROSS_COMPILE_ARM32=arm-linux-androideabi- \
-	make \
-		O=out \
-		clean \
-		mrproper \
-		CC="ccache clang" \
-		AR=llvm-ar \
-		NM=llvm-nm \
-		OBJCOPY=llvm-objcopy \
-		OBJDUMP=llvm-objdump \
-		READELF=llvm-readelf \
-		OBJSIZE=llvm-size \
-		STRIP=llvm-strip \
-		HOSTCC=clang \
-		HOSTCXX=clang++ \
-		vince-perf_defconfig
-	&&
-	make \
-		O=out \
-		CC="ccache clang" \
-		AR=llvm-ar \
-		NM=llvm-nm \
-		OBJCOPY=llvm-objcopy \
-		OBJDUMP=llvm-objdump \
-		READELF=llvm-readelf \
-		OBJSIZE=llvm-size \
-		STRIP=llvm-strip \
-		HOSTCC=clang \
-		HOSTCXX=clang++ \
-		-j$(nproc --all) -flto=thin -O3 -march=native -mtune=native -pipe |& tee -a $HOME/build/build${BUILD}.txt
+	make O=out \
+			clean \
+			mrproper \
+			CC="ccache clang" \
+			AR=llvm-ar \
+			NM=llvm-nm \
+			LD=ld.lld \
+			OBJCOPY=llvm-objcopy \
+			OBJDUMP=llvm-objdump \
+			READELF=llvm-readelf \
+			OBJSIZE=llvm-size \
+			STRIP=llvm-strip \
+			HOSTCC=clang \
+			HOSTCXX=clang++ \
+			vince-perf_defconfig
+
+	make O=out \
+			CC="ccache clang" \
+			AR=llvm-ar \
+			NM=llvm-nm \
+			OBJCOPY=llvm-objcopy \
+			OBJDUMP=llvm-objdump \
+			READELF=llvm-readelf \
+			OBJSIZE=llvm-size \
+			STRIP=llvm-strip \
+			HOSTCC=clang \
+			HOSTCXX=clang++ \
+			-j$(nproc --all) -lto=none |& tee -a $HOME/build/build${BUILD}.txt
 fi
 
 BUILD_END=$(date +"%s")
