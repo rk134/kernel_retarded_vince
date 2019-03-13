@@ -101,7 +101,7 @@ static bool sugov_should_update_freq(struct sugov_policy *sg_policy, u64 time)
 static inline bool use_pelt(void)
 {
 #ifdef CONFIG_SCHED_WALT
-	return (!sysctl_sched_use_walt_cpu_util || walt_disabled);
+	return false;
 #else
 	return true;
 #endif
