@@ -1539,6 +1539,22 @@ static ssize_t qpnp_haptics_store_duration(struct device *dev,
 		}
 	}	
 
+	if (chip->vmax_override) {
+		old_vmax_mv = chip->vmax_mv;
+		if (val >= HAP_MIN_TIME_CALL)
+			chip->vmax_mv = chip->vmax_mv_call;
+		else if (val >= HAP_MIN_TIME_STRONG)
+			chip->vmax_mv = chip->vmax_mv_strong;
+		else
+			chip->vmax_mv = chip->vmax_mv_user;
+
+		rc = qpnp_haptics_vmax_config(chip, chip->vmax_mv, false);
+		if (rc < 0) {
+			chip->vmax_mv = old_vmax_mv;
+			return rc;
+		}
+	}	
+
 	mutex_lock(&chip->param_lock);
 	rc = qpnp_haptics_auto_mode_config(chip, val);
 	if (rc < 0) {
