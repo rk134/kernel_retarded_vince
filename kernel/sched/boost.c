@@ -210,6 +210,7 @@ int sched_boost_handler(struct ctl_table *table, int write,
 	if (ret || !write)
 		goto done;
 
+#ifdef CONFIG_SCHED_WALT
 	if (verify_boost_params(old_val, *data)) {
 #ifdef CONFIG_SCHED_WALT
 		_sched_set_boost(old_val, *data);
@@ -223,6 +224,7 @@ int sched_boost_handler(struct ctl_table *table, int write,
 		*data = old_val;
 		ret = -EINVAL;
 	}
+#endif
 
 done:
 #ifdef CONFIG_SCHED_WALT
