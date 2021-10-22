@@ -8,7 +8,7 @@
 export DEVICE="VINCE"
 export CONFIG="vince-perf_defconfig"
 export CHANNEL_ID="-1750098178"
-export TELEGRAM_TOKEN="$BOT_API_KEY"
+export TELEGRAM_TOKEN=$BOT_API_KEY
 export TC_PATH="$HOME/toolchains"
 export ZIP_DIR="$(pwd)/Flasher"
 export IS_MIUI="no"
