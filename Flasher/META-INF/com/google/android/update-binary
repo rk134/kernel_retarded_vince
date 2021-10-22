@@ -469,21 +469,25 @@ if [ -f version ]; then
   ui_printfile version;
   ui_print " ";
 fi;
-ui_print "==========================================";
-ui_print "|                                        |";
-ui_print "|     █▀█ █▀▀ ▀█▀ ▄▀█ █▀█ █▀▄ █▀▀ █▀▄    |";
-ui_print "|		  █▀▄ ██▄ ░█░ █▀█ █▀▄ █▄▀ ██▄ █▄▀    |";
-ui_print "|                                        |";
-ui_print "|========================================|";
-ui_print "|  Kernel         : Retarded-Kernel      |";
-ui_print "|  Based on       : Unitrix              |";
-ui_print "|  Device         : Redmi 5 Plus         |";
-ui_print "|  Linux version  : 4.9.y                |";
-ui_print "|  Compiler       : Proton Clang 13.0.0  |";
-ui_print "|  Maintainer     : rk134                |";
-ui_print "|========================================|";
-ui_print "| AnyKernel3 by osm0sis @xda-developers. |";
-ui_print "==========================================";
+ui_print "=============================================";
+ui_print "|                                           |";
+ui_print "|  ____      _                _          _  |";
+ui_print "| |  _ \ ___| |_ __ _ _ __ __| | ___  __| | |";
+ui_print "| | |_) / _ \ __/ _` | '__/ _` |/ _ \/ _` | |";
+ui_print "| |  _ <  __/ || (_| | | | (_| |  __/ (_| | |";
+ui_print "| |_| \_\___|\__\__,_|_|  \__,_|\___|\__,_| |";
+ui_print "|										                        |";
+ui_print "|  							                            |";
+ui_print "|===========================================|";
+ui_print "|  Kernel         : Retarded-Kernel         |";
+ui_print "|  Device         : Redmi 5 Plus            |";
+ui_print "|  Linux version  : 4.9.y                   |";
+ui_print "|  Compiler       : Proton Clang 13.0.0     |";
+ui_print "|  Maintainer     : rk134                   |";
+ui_print "|===========================================|";
+ui_print "| AnyKernel3 by osm0sis @xda-developers.    |";
+ui_print "=============================================";
+
 
 setup_env;
 
