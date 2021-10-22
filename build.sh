@@ -13,10 +13,10 @@ export TC_PATH="$HOME/toolchains"
 export ZIP_DIR="$(pwd)/Flasher"
 export IS_MIUI="no"
 export KERNEL_DIR=$(pwd)
-export KBUILD_BUILD_USER="Unitrix-Kernel"
+export KBUILD_BUILD_USER="Retard-Kernel"
 export GCC_COMPILE="no"
-export KBUILD_BUILD_HOST="Cosmic-Horizon"
-export KBUILD_COMPILER_STRING="Unitrix's Cosmic-Clang version 14.0.0"
+export KBUILD_BUILD_HOST="retard-lab"
+export KBUILD_COMPILER_STRING="rxhul's retarded-clang version 14.0.0"
 
 #==============================================================
 #===================== Function Definition ====================
@@ -75,7 +75,7 @@ function clone_tc() {
 [ -d ${TC_PATH} ] || mkdir ${TC_PATH}
 
 if [ "$GCC_COMPILE" == "no" ]; then
-	git clone --depth=1 https://github.com/GhostMaster69-dev/Cosmic-Clang.git ${TC_PATH}/clang
+	git clone --depth=1 https://github.com/rk134/retarded-clang.git ${TC_PATH}/clang
 	export PATH="${TC_PATH}/clang/bin:$PATH"
 	export STRIP="${TC_PATH}/clang/aarch64-linux-gnu/bin/strip"
 	export COMPILER="Clang 14.0.0"
