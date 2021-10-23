@@ -264,7 +264,7 @@ static int simple_lmk_reclaim_thread(void *data)
 
 	while (1) {
 		wait_event_freezable(oom_waitq, atomic_read(&needs_reclaim));
-		scan_and_kill();
+		scan_and_kill(MIN_FREE_PAGES);
 		atomic_set_release(&needs_reclaim, 0);
 	}
 
