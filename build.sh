@@ -3,7 +3,7 @@
 #
 # Copyright (C) 2020 StarLight5234
 # Copyright (C) 2021 GhostMaster69-dev
-#
+# Copyright (C) 2021 rk134
 
 export DEVICE="VINCE"
 export CONFIG="vince-perf_defconfig"
@@ -13,10 +13,10 @@ export TC_PATH="$HOME/toolchains"
 export ZIP_DIR="$(pwd)/Flasher"
 export IS_MIUI="no"
 export KERNEL_DIR=$(pwd)
-export KBUILD_BUILD_USER="Retard-Kernel"
+export KBUILD_BUILD_USER="epyc"
 export GCC_COMPILE="no"
-export KBUILD_BUILD_HOST="retard-lab"
-export KBUILD_COMPILER_STRING="rxhul's retarded-clang version 14.0.0"
+export KBUILD_BUILD_HOST="Epyc-Lab"
+export KBUILD_COMPILER_STRING="rxhul's epyc-clang version 14.0.0"
 
 #==============================================================
 #===================== Function Definition ====================
@@ -75,7 +75,7 @@ function clone_tc() {
 [ -d ${TC_PATH} ] || mkdir ${TC_PATH}
 
 if [ "$GCC_COMPILE" == "no" ]; then
-	git clone --depth=1 https://github.com/rk134/retarded-clang.git ${TC_PATH}/clang
+	git clone --depth=1 https://github.com/rk134/epyc-clang.git ${TC_PATH}/clang
 	export PATH="${TC_PATH}/clang/bin:$PATH"
 	export STRIP="${TC_PATH}/clang/aarch64-linux-gnu/bin/strip"
 	export COMPILER="Clang 14.0.0"
