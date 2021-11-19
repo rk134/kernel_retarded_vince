@@ -75,7 +75,7 @@ function clone_tc() {
 [ -d ${TC_PATH} ] || mkdir ${TC_PATH}
 
 if [ "$GCC_COMPILE" == "no" ]; then
-	git clone --depth=1 https://github.com/rk134/epyc-clang.git ${TC_PATH}/clang
+	git clone --depth=1 https://github.com/kdrag0n/proton-clang.git ${TC_PATH}/clang
 	export PATH="${TC_PATH}/clang/bin:$PATH"
 	export STRIP="${TC_PATH}/clang/aarch64-linux-gnu/bin/strip"
 	export COMPILER="Clang 14.0.0"
