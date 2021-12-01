@@ -104,6 +104,7 @@ if [ "$GCC_COMPILE" == "no" ]; then
 			      ARCH=arm64 \
 			      CC="ccache clang" \
 			      AR=llvm-ar \
+			      AS=llvm-as \
 			      NM=llvm-nm \
 			      LD=ld.lld \
 			      OBJCOPY=llvm-objcopy \
@@ -115,6 +116,8 @@ if [ "$GCC_COMPILE" == "no" ]; then
 			      HOSTCXX=clang++ \
 			      HOSTAR=llvm-ar \
 			      HOSTLD=ld.lld \
+			      HOSTAS=llvm-as \
+			      HOSTNM=llvm-nm \
 			      CROSS_COMPILE=aarch64-linux-gnu- \
 			      CROSS_COMPILE_ARM32=arm-linux-gnueabi- |& tee -a $HOME/build/build${BUILD}.txt
 else
@@ -154,7 +157,7 @@ fi
 cd $ZIP_DIR
 make clean &>/dev/null
 cp $KERN_IMG $ZIP_DIR/zImage
-if [ "$BRANCH" == "stable" ]; then
+if [ "$BRANCH" == "threadripper-lmk" ]; then
 	make stable &>/dev/null
 elif [ "$BRANCH" == "beta" ]; then
 	make beta &>/dev/null
