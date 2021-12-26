@@ -17,7 +17,7 @@ task:
   clone_script:
        - dir
        - rm -rf vince && rm -rf environment
-       - git clone https://github.com/rk134/kernel_threadripper_vince.git -b CI-CloneQUICK --depth=1 vince
+       - git clone https://github.com/rk134/kernel_threadripper_vince.git -b threadripper-lmk-perf --depth=1 vince
   Build-Env-Setup_script:
        - git config --global user.name "rk134"
        - git config --global user.email "rahul.kantrapally@gmail.com"
