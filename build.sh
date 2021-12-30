@@ -3,20 +3,20 @@
 #
 # Copyright (C) 2020 StarLight5234
 # Copyright (C) 2021 GhostMaster69-dev
-#
+# Copyright (C) 2021 rk134
 
 export DEVICE="VINCE"
 export CONFIG="vince-perf_defconfig"
-export CHANNEL_ID="$ID"
-export TELEGRAM_TOKEN="$BOT_API_KEY"
+export CHANNEL_ID="-1001750098178"
+export TELEGRAM_TOKEN=$BOT_API_KEY
 export TC_PATH="$HOME/toolchains"
 export ZIP_DIR="$(pwd)/Flasher"
 export IS_MIUI="no"
 export KERNEL_DIR=$(pwd)
-export KBUILD_BUILD_USER="Unitrix-Kernel"
+export KBUILD_BUILD_USER="rxhul"
 export GCC_COMPILE="no"
-export KBUILD_BUILD_HOST="Cosmic-Horizon"
-export KBUILD_COMPILER_STRING="Unitrix's Cosmic-Clang version 14.0.0"
+export KBUILD_BUILD_HOST="Epyc-Lab"
+export KBUILD_COMPILER_STRING="kdrag0n's proton clang"
 
 #==============================================================
 #===================== Function Definition ====================
@@ -54,7 +54,7 @@ function tg_sendinfo() {
 # Send a sticker
 function start_sticker() {
     curl -s -X POST "https://api.telegram.org/bot$TELEGRAM_TOKEN/sendSticker" \
-        -d sticker="CAACAgUAAxkBAAMPXvdff5azEK_7peNplS4ywWcagh4AAgwBAALQuClVMBjhY-CopowaBA" \
+        -d sticker="CAACAgQAAxkBAAEDIYdhctPrAm1Ydl3sFori9vNNnjAoigAC9AkAAl79YVHW7zfYKT9-XyEE" \
         -d chat_id=$CHANNEL_ID
 }
 
@@ -75,7 +75,7 @@ function clone_tc() {
 [ -d ${TC_PATH} ] || mkdir ${TC_PATH}
 
 if [ "$GCC_COMPILE" == "no" ]; then
-	git clone --depth=1 https://github.com/GhostMaster69-dev/Cosmic-Clang.git ${TC_PATH}/clang
+	git clone --depth=1 https://github.com/kdrag0n/proton-clang.git ${TC_PATH}/clang
 	export PATH="${TC_PATH}/clang/bin:$PATH"
 	export STRIP="${TC_PATH}/clang/aarch64-linux-gnu/bin/strip"
 	export COMPILER="Clang 14.0.0"
@@ -102,12 +102,22 @@ make O=out ARCH=arm64 "$CONFIG"
 if [ "$GCC_COMPILE" == "no" ]; then
 	make -j$(nproc --all) O=out \
 			      ARCH=arm64 \
+			      CC="ccache clang" \
 			      AR=llvm-ar \
+			      AS=llvm-as \
 			      NM=llvm-nm \
+			      LD=ld.lld \
 			      OBJCOPY=llvm-objcopy \
 			      OBJDUMP=llvm-objdump \
+			      OBJSIZE=llvm-size \
+			      READELF=llvm-readelf \
 			      STRIP=llvm-strip \
-			      CC=clang \
+			      HOSTCC=clang \
+			      HOSTCXX=clang++ \
+			      HOSTAR=llvm-ar \
+			      HOSTLD=ld.lld \
+			      HOSTAS=llvm-as \
+			      HOSTNM=llvm-nm \
 			      CROSS_COMPILE=aarch64-linux-gnu- \
 			      CROSS_COMPILE_ARM32=arm-linux-gnueabi- |& tee -a $HOME/build/build${BUILD}.txt
 else
@@ -147,7 +157,7 @@ fi
 cd $ZIP_DIR
 make clean &>/dev/null
 cp $KERN_IMG $ZIP_DIR/zImage
-if [ "$BRANCH" == "stable" ]; then
+if [ "$BRANCH" == "threadripper-lmk" ]; then
 	make stable &>/dev/null
 elif [ "$BRANCH" == "beta" ]; then
 	make beta &>/dev/null
@@ -183,15 +193,15 @@ echo ${BUILD} > $BTXT
 stick=$(($RANDOM % 5))
 
 if [ "$stick" == "0" ]; then
-	STICKER="CAACAgUAAxkBAAMQXvdgEdkCuvPzzQeXML3J6srMN4gAAvIAA3PMoVfqdoREJO6DahoE"
+	STICKER="CAACAgIAAxkBAAEDIWhhcssHSMR1HTAHtKOby21tVafvWgAC_gADVp29CtoEYTAu-df_IQQ"
 elif [ "$stick" == "1" ];then
-	STICKER="CAACAgQAAxkBAAMRXveCWisHv4FNMrlAacnmFRWSL0wAAgEBAAJyIUgjtWOZJdyKFpMaBA"
+	STICKER="CAACAgIAAxkBAAEDIXlhcsvK31evc58huNXRZnSWf62R2AAC_w4AAhSUAAFL2_NFL9rIYIAhBA"
 elif [ "$stick" == "2" ];then
-	STICKER="CAACAgUAAxkBAAMSXveCj7P1y5I5AAGaH2wt2tMCXuqZAAL_AAO-xUFXBB9-5f3MjMsaBA"
+	STICKER="CAACAgUAAxkBAAEDIXthcsvYV4zwNP0ousx1ULwkKGRdygACIAADYOojP1RURqxGbEhrIQQ"
 elif [ "$stick" == "3" ];then
-	STICKER="CAACAgUAAxkBAAMTXveDSSQq2q8fGrIvpmJ4kPx8T1AAAhEBAALKhyBVEsDSQXY-jrwaBA"
+	STICKER="CAACAgUAAxkBAAEDIX1hcsvr8e6DUr1J4KmHCtI98gx1xwACNgADP9jqMxV1oXRlrlnXIQQ"
 elif [ "$stick" == "4" ];then
-	STICKER="CAACAgUAAxkBAAMUXveDrb4guQZSu7mP7ZptE4547PsAAugAA_scAAFXWZ-1a2wWKUcaBA"
+	STICKER="CAACAgEAAxkBAAEDIYFhcswQNqw8ZPubg7zGQkNhaYGTBAACKwIAAvx0QESn-U6NZyYYfSEE"
 fi
 
 #==============================================================
