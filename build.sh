@@ -14,7 +14,7 @@ export ZIP_DIR="$(pwd)/Flasher"
 export IS_MIUI="no"
 export KERNEL_DIR=$(pwd)
 export KBUILD_BUILD_USER="epyc"
-export GCC_COMPILE="no"
+export GCC_COMPILE="yes"
 export KBUILD_BUILD_HOST="Epyc-Lab"
 export KBUILD_COMPILER_STRING="rxhul's epyc-clang version 14.0.0"
 
@@ -80,11 +80,13 @@ if [ "$GCC_COMPILE" == "no" ]; then
 	export STRIP="${TC_PATH}/clang/aarch64-linux-gnu/bin/strip"
 	export COMPILER="Clang 14.0.0"
 else
-	git clone --depth=1 https://github.com/arter97/arm64-gcc ${TC_PATH}/gcc64
-	git clone --depth=1 https://github.com/arter97/arm32-gcc ${TC_PATH}/gcc32
+	git clone --depth=1 https://github.com/mvaisakh/gcc-arm64.git ${TC_PATH}/gcc64
+	git clone --depth=1 https://github.com/mvaisakh/gcc-arm.git ${TC_PATH}/gcc32
+#	git clone --depth=1 https://github.com/arter97/arm64-gcc ${TC_PATH}/gcc64
+#	git clone --depth=1 https://github.com/arter97/arm32-gcc ${TC_PATH}/gcc32
 	export PATH="${TC_PATH}/gcc64/bin:${TC_PATH}/gcc32/bin:$PATH"
 	export STRIP="${TC_PATH}/gcc64/aarch64-elf/bin/strip"
-	export COMPILER="Arter97's GCC Compiler" 
+	export COMPILER="mvaisakh's EvaGCC" 
 fi
 
 }
