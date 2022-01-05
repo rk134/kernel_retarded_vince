@@ -58,7 +58,7 @@ workflows:
 
             # not just bash, e.g.:
 
-            # ruby ./path/to/script.rb
+            # ruby ./path/to/script.r
     - cache-push@2.6:
         inputs:
         - cache_paths: $BITRISE_SOURCE_DIR
