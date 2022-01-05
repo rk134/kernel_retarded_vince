@@ -47,8 +47,8 @@ workflows:
 
             rclone copy $(pwd)/Flasher/*.zip ccache:vince
 
-            curl -s https://api.telegram.org/bot$tokentl/sendMessage -d
-            chat_id=$idtl -d text="Download link
+            curl -s https://api.telegram.org/bot$BOT_API_KEY/sendMessage -d
+            chat_id=$channelid -d text="Download link
             https://retarded-sprout.axsp.workers.dev/vince/($(pwd)/Flasher && ls
             *.zip"
 
