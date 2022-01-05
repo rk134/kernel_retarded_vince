@@ -1362,6 +1362,11 @@ CONFIG_BATTERY_SAVER=y
 # CONFIG_FPR_FPC is not set
 
 #
+# Fingerprint boost driver
+#
+CONFIG_FINGERPRINT_BOOST=y
+
+#
 # SCSI device support
 #
 CONFIG_SCSI_MOD=y
