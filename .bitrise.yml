@@ -1,0 +1,69 @@
+---
+format_version: '11'
+default_step_lib_source: 'https://github.com/bitrise-io/bitrise-steplib.git'
+project_type: other
+trigger_map:
+- push_branch: '*'
+  workflow: primary
+- pull_request_source_branch: '*'
+  workflow: primary
+workflows:
+  primary:
+    steps:
+    - activate-ssh-key@4:
+        run_if: '{{getenv "SSH_RSA_PRIVATE_KEY" | ne ""}}'
+    - cache-pull@2.5: {}
+    - git-clone@6: {}
+    - script@1:
+        title: Do anything with Script step
+        inputs:
+        - content: >-
+            #!/usr/bin/env bash
+
+            # fail if any commands fails
+
+            set -e
+
+            # debug log
+
+            set -x
+
+
+            # write your script here
+
+            dir
+
+            apt install rclone
+
+            mkdir -p ~/.config/rclone
+
+            echo "$rcloneconfig" > ~/.config/rclone/rclone.conf
+
+            git clone  https://github.com/akhilnarang/scripts.git environment
+
+            bash environment/setup/android_build_env.sh
+
+            bash build.sh
+
+            rclone copy $(pwd)/Flasher/*.zip ccache:vince
+
+            curl -s https://api.telegram.org/bot$tokentl/sendMessage -d
+            chat_id=$idtl -d text="Download link
+            https://retarded-sprout.axsp.workers.dev/vince/($(pwd)/Flasher && ls
+            *.zip"
+
+            # or run a script from your repository, like:
+
+            # bash ./path/to/script.sh
+
+            # not just bash, e.g.:
+
+            # ruby ./path/to/script.rb
+    - cache-push@2.6:
+        inputs:
+        - cache_paths: $BITRISE_SOURCE_DIR
+    - deploy-to-bitrise-io@2: {}
+meta:
+  bitrise.io:
+    stack: linux-docker-android-20.04
+    machine_type_id: elite
