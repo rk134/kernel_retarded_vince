@@ -75,11 +75,18 @@ function clone_tc() {
 [ -d ${TC_PATH} ] || mkdir ${TC_PATH}
 
 if [ "$GCC_COMPILE" == "no" ]; then
+	if [ -d "/root/toolchains/clang" ]
+	then
+   	 echo "Proton clang dir exists, not cloning toolchain." 
+	else
+   	 echo "Proton clang dir does not exist, cloning toolchain."
 	git clone --depth=1 https://github.com/kdrag0n/proton-clang.git ${TC_PATH}/clang
 	export PATH="${TC_PATH}/clang/bin:$PATH"
 	export STRIP="${TC_PATH}/clang/aarch64-linux-gnu/bin/strip"
-	export COMPILER="Clang 14.0.0"
-else
+	export COMPILER="kdrag0n's Proton-clang"
+fi
+
+if [ "$GCC_COMPILE" == "yes" ]; then
 	git clone --depth=1 https://github.com/arter97/arm64-gcc ${TC_PATH}/gcc64
 	git clone --depth=1 https://github.com/arter97/arm32-gcc ${TC_PATH}/gcc32
 	export PATH="${TC_PATH}/gcc64/bin:${TC_PATH}/gcc32/bin:$PATH"
