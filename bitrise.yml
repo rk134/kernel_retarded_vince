@@ -17,48 +17,7 @@ workflows:
     - script@1:
         title: Do anything with Script step
         inputs:
-        - content: >-
-            #!/usr/bin/env bash
-
-            # fail if any commands fails
-
-            set -e
-
-            # debug log
-
-            set -x
-
-
-            # write your script here
-
-            dir
-
-            apt install rclone
-
-            mkdir -p ~/.config/rclone
-
-            echo "$rcloneconfig" > ~/.config/rclone/rclone.conf
-
-            git clone  https://github.com/akhilnarang/scripts.git environment
-
-            bash environment/setup/android_build_env.sh
-
-            bash build.sh
-
-            rclone copy $(pwd)/Flasher/*.zip ccache:vince
-
-            curl -s https://api.telegram.org/bot$BOT_API_KEY/sendMessage -d
-            chat_id=$channelid -d text="Download link
-            https://retarded-sprout.axsp.workers.dev/vince/($(pwd)/Flasher && ls
-            *.zip"
-
-            # or run a script from your repository, like:
-
-            # bash ./path/to/script.sh
-
-            # not just bash, e.g.:
-
-            # ruby ./path/to/script.r
+        - content: "#!/usr/bin/env bash\n# fail if any commands fails\nset -e\n# debug log\nset -x\n\n# write your script here\ndir\napt install rclone\nmkdir -p ~/.config/rclone\necho \"$rcloneconfig\" > ~/.config/rclone/rclone.conf\nif [ -d \"environment\" ]\nthen\n    echo \"Environment scripts dir exists, not cloning env-setup.\" \nelse\n    echo \"Environment scripts dir does not exist, cloning env-setup.\"\n\tgit clone  https://github.com/akhilnarang/scripts.git environment\n\tbash environment/setup/android_build_env.sh\nfi\nbash build.sh\nrclone copy $(pwd)/Flasher/*.zip ccache:vince\ncurl -s https://api.telegram.org/bot$BOT_API_KEY/sendMessage -d chat_id=$channelid -d text=\"Download link https://retarded-sprout.axsp.workers.dev/vince/($(pwd)/Flasher && ls *.zip\"\n# or run a script from your repository, like:\n# bash ./path/to/script.sh\n# not just bash, e.g.:\n# ruby ./path/to/script.r"
     - cache-push@2.6:
         inputs:
         - cache_paths: $BITRISE_SOURCE_DIR
