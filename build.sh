@@ -42,6 +42,14 @@ tg_pushzip()
 			-F caption="Build Finished after $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) seconds"
 }
 
+# Upload download link to channel
+tg_pushlink()
+{
+        export zip_directory="$(cd $(pwd)/Flasher/ && ls *.zip)"
+        rclone copy $(pwd)/Flasher/*.zip ccache:vince -P
+        curl -s https://api.telegram.org/bot$TELEGRAM_TOKEN/sendMessage -d chat_id=$CHANNEL_ID -d text="Download link https://retarded-sprout.axsp.workers.dev/vince/$zip_directory"
+}
+
 # Send Updates
 function tg_sendinfo() {
 	curl -s "https://api.telegram.org/bot$TELEGRAM_TOKEN/sendMessage" \
@@ -71,23 +79,23 @@ function error_sticker() {
 #======================== & AnyKernel =========================
 #==============================================================
 
-function clone_tc() {
-[ -d ${TC_PATH} ] || mkdir ${TC_PATH}
+#function clone_tc() {
+#[ -d ${TC_PATH} ] || mkdir ${TC_PATH}
 
-if [ "$GCC_COMPILE" == "no" ]; then
+#if [ "$GCC_COMPILE" == "no" ]; then
 	git clone --depth=1 https://github.com/kdrag0n/proton-clang.git ${TC_PATH}/clang
 	export PATH="${TC_PATH}/clang/bin:$PATH"
 	export STRIP="${TC_PATH}/clang/aarch64-linux-gnu/bin/strip"
 	export COMPILER="Clang 14.0.0"
-else
+#else
 	git clone --depth=1 https://github.com/arter97/arm64-gcc ${TC_PATH}/gcc64
 	git clone --depth=1 https://github.com/arter97/arm32-gcc ${TC_PATH}/gcc32
 	export PATH="${TC_PATH}/gcc64/bin:${TC_PATH}/gcc32/bin:$PATH"
 	export STRIP="${TC_PATH}/gcc64/aarch64-elf/bin/strip"
 	export COMPILER="Arter97's GCC Compiler" 
-fi
+#fi
 
-}
+#}
 
 #==============================================================
 #=========================== Make =============================
@@ -209,7 +217,7 @@ fi
 #======================= definition ===========================
 #==============================================================
 
-clone_tc
+#clone_tc
 
 COMMIT=$(git log --pretty=format:'"%h : %s"' -1)
 BRANCH="$(git rev-parse --abbrev-ref HEAD)"
@@ -240,4 +248,5 @@ if ! [ -a "$KERN_IMG" ]; then
 	exit 1
 else
 	make_flashable
+	tg_pushlink
 fi
