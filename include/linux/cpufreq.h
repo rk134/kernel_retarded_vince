@@ -135,8 +135,9 @@ struct cpufreq_policy {
 
 	/* For cpufreq driver's internal use */
 	void			*driver_data;
-       /*Disable cpu cooling*/
-       bool            disable_cpucooling;
+    
+	/*Disable cpu cooling*/
+    bool            disable_cpucooling;
 };
 
 /* Only for ACPI */
