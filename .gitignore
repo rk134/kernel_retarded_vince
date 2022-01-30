@@ -129,3 +129,6 @@ out/
 
 # Ignore Flasher Directory
 Flasher/
+
+# Ignore toolchain directory
+toolchain/
